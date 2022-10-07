@@ -1,0 +1,26 @@
+- name: Install consul dependent packages
+  yum:
+   name: yum-utils
+   state: latest
+  register: dependent_status
+
+- name: Configure  repo for nomad packages
+  yum_repository:
+    name: consul_repo
+	description: "hashicorp_repo"
+	baseurl: "https://rpm.releases.hashicorp.com/AmazonLinux/hashicorp.repo"
+	enabled: yes
+	gpgcheck: no
+	
+- name: Install consul package
+  yum:
+    name: consul
+	state: latest
+  register: consul_install
+
+- name: Verify the consul installation
+  shell: consul
+  register: consul_status
+  
+- debug:
+   var: consul_status.stdout
