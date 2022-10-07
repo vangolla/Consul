@@ -1,0 +1,10 @@
+# Configure Consul
+
+- name: Create custom configuration
+  copy:
+    dest: "/etc/consul.d/consul.hcl"
+    owner: consul
+    group: consul
+    content: "{{ lookup('template', 'templates/config.j2' }}"
+    mode: 0600
+  
